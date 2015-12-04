@@ -1,6 +1,8 @@
 # TOTAL DRAFT
+# this is a lanugage for describing an API. My thought is that it will be parsed by PHP (so I can call PHP functions from it) at first, and perhaps slowly moved to a much faster language if the concept proves solid.
+# this document in particular is an example of how I would write a very simple web app in PHP. I'm aiming this to be a middleware for single-page apps (e.g. something written in Angular or React) where the developer wants to quickly build an API which is little more than a delivery system for static files and SQL calls.
 
-# comments are preceded with a hash
+# comments in Lanky are preceded with a hash
 
 # we can route to a static file using the "static" keyword
 # here, a call of any type (get, post, etc) to / is given index.html
