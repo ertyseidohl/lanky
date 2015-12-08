@@ -4,7 +4,7 @@ A really "thin" PHP-based language for describing APIs
 Check out thoughts.txt for an example of the language
 
 ## Current status
-Still mostly in by brain
+Still mostly in my brain
 
 ## Todo
   * Solidify the concept
