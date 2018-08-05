@@ -7,36 +7,36 @@
 # we can route to a static file using the "static" keyword
 # here, a call of any type (get, post, etc) to / is given index.html
 REQUEST /
-	static >> /static/index.html
+	static /static/index.html
 
 # here is a post to login
 # it takes two required (!) parameters in the post body
 # it then calls the php function login (defined where?)
-POST /login ['!user', '!password']
-	php >> login($user, $password)
+POST /login/!user/!password
+	php login($user, $password)
 
 # register takes two required (!) and one optional parameter
 # then it calls the register function
-POST /register ['!user', '!password', 'email']
-	php >> register($user, $password, $email)
+POST /register/!user/!password/:email
+	php register($user, $password, $email)
 
 # if the user is authenticated and they attempt to get the profile page without params we show them their own user profile
 # notice that we are just returning the results of an SQL query against some database. The frontend of the app handles the displaying of that data
 # this is the main scenario where this language is useful
 AUTH GET /profile
-	sql >> SELECT * FROM profiles WHERE user_id={{$_SESSION['user_id']}}
+	sql SELECT * FROM profiles WHERE user_id={{$_SESSION['user_id']}}
 
 # throw a 403 if the user is not logged in
 # the frontend should handle this case and present the login screen
 # (perhaps for simplicity we would just do a php header('HTTP/1.0 403 Forbidden') call)?
 GET /profile
-	code >> 403
+	code 403
 
 # here is a get request with a required get param. I'm thinking this handles both /profile/1 and /profile?user_id=1 (or maybe that's a setting somewhere)?
 # I have a feeling we'll have to change the syntax for the SQL/PHP line for security purposes.
 AUTH GET /profile/!user_id
-	sql >> SELECT * FROM profiles WHERE user_id={{$user_id}}
+	sql SELECT * FROM profiles WHERE user_id={{$user_id}}
 
 # If the user isn't authed then they only get some of the data.
 GET /profile/!user_id
-	sql >> SELECT username FROM profiles WHERE user_id={{$user_id}}
+	sql SELECT username FROM profiles WHERE user_id={{$user_id}}
